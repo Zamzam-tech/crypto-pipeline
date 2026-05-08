@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: crypto_data
+    description: "This source represents the raw cryptocurrency data ingested from the API. It serves as the foundation for all subsequent transformations and analyses in the pipeline."
+    database: crypto_data
+    schema: main
+    tables:
+      - name: crypto_data
+        description: "This is the raw table containing cryptocurrency data ingested from the API. It includes all columns as they were ingested without any transformations."
