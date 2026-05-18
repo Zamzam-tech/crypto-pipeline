@@ -10,3 +10,6 @@ dbt_modules/
 *.pyc
 *.log
 
+ingestion/latest_file.txt
+ingestion/cgk_raw_*.json
+dbt/crypto_pipeline/profiles.yml
