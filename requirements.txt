@@ -1,4 +1,12 @@
-requests
-pandas
-duckdb
-dbt-duckdb
+duckdb==1.5.3
+pandas==3.0.3
+numpy==2.4.6
+plotly==6.8.0
+matplotlib==3.10.9
+seaborn==0.13.2
+streamlit==1.58.0
+apache-airflow==3.2.2
+dbt-duckdb==1.10.1
+requests==2.34.2
+jupyter==1.1.1
+statsmodels==0.14.6

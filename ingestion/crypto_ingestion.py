@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import duckdb
 import os
+import glob
 
 def fetch_coin_gecko():
     URL = "https://api.coingecko.com/api/v3/coins/markets"
@@ -63,13 +64,20 @@ def load_crypto_data():
         connect_db.execute(f"INSERT INTO crypto_data SELECT * FROM read_json('{filename}')")
         print("Success! Crypto data loaded into DuckDB.")
 
-        connect_db.sql("SELECT id, symbol, current_price, ingested_at FROM crypto_data ORDER BY ingested_at DESC LIMIT 5").show()
+        connect_db.sql("SELECT id as coin_id,MAX(current_price) as highest_price,MIN(current_price) as lowest_price,AVG(current_price) as avg_price FROM crypto_data GROUP BY id;").show()
         connect_db.close()
 
     except Exception as e:
         print(f"Error loading data into DuckDB: {e}")
 
+#Remove old files to save space
+def cleanup_old_files():
+    files=glob.glob("/mnt/c/Users/yasab/OneDrive/Desktop/Lean Data pipleine/ingestion/cgk_raw_*.json")
+    for file in files:
+        os.remove(file)
+        print(f"Deleted {len(files)} old files to save space.")
 
 if __name__ == "__main__":
     fetch_coin_gecko()
     load_crypto_data()
+    cleanup_old_files()

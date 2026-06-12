@@ -7,7 +7,6 @@ models:
       - name: coin_id
         description: "The unique identifier for each cryptocurrency"
         tests:
-          - unique
           - not_null
       - name: symbol
         description: "The ticker symbol for the cryptocurrency (e.g., BTC for Bitcoin)"

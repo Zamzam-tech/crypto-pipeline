@@ -1,13 +1,14 @@
-name: Hourly Crypto Pipeline
+name: Crypto Pipeline CI
 
 on:
-  schedule:
-    - cron: '0 * * * *'
+  push:
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,13 +18,33 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run ingestion pipeline
+      # 1. Code quality check (NEW)
+      - name: Lint Python code
+        run: |
+          pip install flake8
+          flake8 ingestion/
+
+      # 2. Ingestion test
+      - name: Run ingestion script
         run: python ingestion/main.py
 
-      - name: Run dbt transformations
+      # 3. dbt compile check 
+      - name: dbt compile
+        run: |
+          cd dbt/crypto_pipeline
+          dbt compile
+
+      #  4. dbt run + test
+      - name: dbt run and test
         run: |
           cd dbt/crypto_pipeline
           dbt run
