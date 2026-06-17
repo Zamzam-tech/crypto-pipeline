@@ -2,34 +2,48 @@ version: 2
 
 models:
   - name: stg_coins
-    description: "This is the staging model for the raw crypto data. It selects relevant columns and performs basic transformations."
+    description: "Staging model for raw crypto data from CoinGecko"
     columns:
       - name: coin_id
-        description: "The unique identifier for each cryptocurrency"
+        description: "Unique identifier for each cryptocurrency"
         tests:
           - not_null
       - name: symbol
-        description: "The ticker symbol for the cryptocurrency (e.g., BTC for Bitcoin)"
+        description: "Ticker symbol (e.g. BTC)"
         tests:
           - not_null
       - name: current_price
-        description: "The current price of the cryptocurrency in USD"
+        description: "Current price in USD"
         tests:
           - not_null
       - name: market_cap
-        description: "The market capitalization of the cryptocurrency in USD"
+        description: "Market capitalization in USD"
         tests:
           - not_null
       - name: total_volume
-        description: "The total trading volume of the cryptocurrency in the last 24 hours"
+        description: "24hr trading volume in USD"
         tests:
           - not_null
       - name: last_updated
-        description: "The timestamp of the last update for the cryptocurrency data"
         tests:
           - not_null
       - name: ingested_at
-        description: "The timestamp of when the data was ingested into the staging model"
         tests:
           - not_null
 
+  - name: stg_fear_greed
+    description: "Staging model for Fear & Greed Index from alternative.me"
+    columns:
+      - name: fear_greed_score
+        description: "Score from 0-100"
+        tests:
+          - not_null
+      - name: sentiment
+        description: "Classification e.g. Extreme Fear, Greed"
+        tests:
+          - not_null
+      - name: fetch_date
+        description: "Date the score was recorded"
+        tests:
+          - not_null
+          - unique

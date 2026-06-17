@@ -76,6 +76,7 @@ def cleanup_old_files():
     for file in files:
         os.remove(file)
         print(f"Deleted {len(files)} old files to save space.")
+            
 
 if __name__ == "__main__":
     fetch_coin_gecko()

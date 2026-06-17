@@ -113,5 +113,71 @@ with col4:
         .reset_index(drop=True),
         use_container_width=True
     )
+st.divider()
+
+st.subheader("😱 Fear & Greed Index")
+
+@st.cache_data(ttl=3600)
+def load_sentiment():
+    conn = duckdb.connect(DB_PATH, read_only=True)
+    df = conn.sql("""
+        SELECT * FROM fact_daily_market
+        WHERE coin_name = 'Bitcoin'
+        ORDER BY date DESC
+    """).df()
+    conn.close()
+    return df
+
+sentiment_df = load_sentiment()
+
+# Today's score
+latest_fg = sentiment_df.iloc[0]
+score = latest_fg['fear_greed_score']
+sentiment = latest_fg['sentiment']
+
+# Color based on score
+if score <= 25:
+    color = "🔴"
+elif score <= 50:
+    color = "🟠"
+elif score <= 75:
+    color = "🟡"
+else:
+    color = "🟢"
+
+col5, col6 = st.columns([1, 3])
+
+with col5:
+    st.metric(
+        label="Today's Fear & Greed",
+        value=f"{color} {score}/100",
+        delta=sentiment
+    )
+
+with col6:
+    import plotly.graph_objects as go
+    fig5 = go.Figure()
+    fig5.add_trace(go.Scatter(
+        x=sentiment_df['date'],
+        y=sentiment_df['avg_price'],
+        name='Bitcoin Price',
+        line=dict(color='orange', width=2),
+        yaxis='y1'
+    ))
+    fig5.add_trace(go.Scatter(
+        x=sentiment_df['date'],
+        y=sentiment_df['fear_greed_score'],
+        name='Fear & Greed Score',
+        line=dict(color='red', width=2, dash='dot'),
+        yaxis='y2'
+    ))
+    fig5.update_layout(
+        title='Bitcoin Price vs Fear & Greed Index',
+        yaxis=dict(title='Price (USD)', side='left'),
+        yaxis2=dict(title='Fear & Greed Score', side='right', overlaying='y', range=[0, 100]),
+        hovermode='x unified',
+        height=400
+    )
+    st.plotly_chart(fig5, use_container_width=True)    
 
 st.caption(f"Last data ingestion: {df['ingested_at'].max()}")
