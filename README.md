@@ -1,12 +1,12 @@
-# 🚀 Crypto Data Engineering Pipeline
+#  Crypto Data Engineering Pipeline
 
 An end-to-end data engineering pipeline that ingests live cryptocurrency market data from CoinGecko API and the Fear & Greed Index, processes it through a medallion architecture using dbt, and stores analytics-ready datasets in DuckDB for downstream analysis and visualization.
 
-> 💡 This pipeline passively captured the June 6th 2026 Bitcoin crash (-11.87% in a single hour) — an event that triggered $1.1B in global liquidations. Fear & Greed sentiment hit 10/100 (Extreme Fear) confirming the market panic.
+>  This pipeline passively captured the June 6th 2026 Bitcoin crash (-11.87% in a single hour) — an event that triggered $1.1B in global liquidations. Fear & Greed sentiment hit 10/100 (Extreme Fear) confirming the market panic.
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 | Tool | Purpose |
 |------|---------|
@@ -22,7 +22,7 @@ An end-to-end data engineering pipeline that ingests live cryptocurrency market 
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 CoinGecko API ─────┐
 
 ├──▶ Python Ingestion ──▶ DuckDB (Raw)
@@ -66,7 +66,7 @@ From 1 month of hourly data across 55 coins (May–June 2026):
 
 ---
 
-## ⚙️ Pipeline Components
+## Pipeline Components
 
 **🔹 Ingestion Layer**
 Two separate ingestion scripts for different data sources and schedules:
@@ -93,7 +93,7 @@ Interactive dashboard with real-time metrics, price over time, market cap rankin
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 ingestion/
 
 ├── crypto_ingestion.py         # CoinGecko ingestion
@@ -126,7 +126,7 @@ requirements.txt
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 ```bash
 # 1. Install dependencies
@@ -149,7 +149,7 @@ airflow standalone
 
 ---
 
-## 📌 Roadmap
+##  Roadmap
 
 - [ ] Migrate storage layer to cloud warehouse (BigQuery or PostgreSQL)
 - [x] Add second data source (Fear & Greed Index) ✅
