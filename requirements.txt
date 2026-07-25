@@ -10,3 +10,5 @@ dbt-duckdb==1.10.1
 requests==2.34.2
 jupyter==1.1.1
 statsmodels==0.14.6
+google-cloud-bigquery==3.24.0
+dbt-bigquery==1.10.1

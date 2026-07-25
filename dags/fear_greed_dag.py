@@ -28,13 +28,13 @@ with DAG(
     # Task 3 — Run dbt transformations
     run_dbt = BashOperator(
         task_id='run_dbt',
-        bash_command='cd /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/dbt/crypto_pipeline && /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/airflow-env/bin/dbt run --profiles-dir /home/zamzam/.dbt'
+        bash_command='cd /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/dbt/crypto_pipeline && /home/zamzam/airflow-env-311/bin/dbt run --profiles-dir /home/zamzam/.dbt'
     )
 
     # Task 4 — Run dbt tests
     test_dbt = BashOperator(
         task_id='test_dbt',
-        bash_command='cd /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/dbt/crypto_pipeline && /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/airflow-env/bin/dbt test --profiles-dir /home/zamzam/.dbt'
+        bash_command='cd /mnt/c/Users/yasab/OneDrive/Desktop/Lean\\ Data\\ pipleine/dbt/crypto_pipeline && /home/zamzam/airflow-env-311/bin/dbt test --profiles-dir /home/zamzam/.dbt'
     )
 
     # Task dependencies

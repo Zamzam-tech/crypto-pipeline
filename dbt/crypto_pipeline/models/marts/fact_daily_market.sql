@@ -13,7 +13,6 @@ WITH daily_crypto AS (
 sentiment AS (
     SELECT * FROM {{ ref('stg_fear_greed') }}
 )
-
 SELECT
     c.date,
     c.coin_name,
